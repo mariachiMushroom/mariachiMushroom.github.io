@@ -40,21 +40,31 @@ $(function() {
     return dfd.promise();
   }
 
+  function getRandomElement(array) {
+    return array[Math.floor(Math.random()*array.length)];
+  }
+
+  function playRandomNoise() {
+    var toPlay;
+    if (Math.random() < 0.5) {
+      toPlay = getRandomElement(MORTY_FILES);
+    } else {
+      toPlay = getRandomElement(RICK_FILES);
+    }
+    createjs.Sound.play(toPlay);
+  }
+
   loadAudio()
   .then(function() {
     console.log('all audio loaded');
     $('#loading-indicator').text('Done loading!');
   }, function() {
     $('#loading-indicator').text('Error loading, try refreshing?');
+  })
+  .then(function() {
+    var bg = createjs.Sound.play(BG_FILE[0]);
+    bg.loop = -1;
+
+    setInterval(playRandomNoise, 5000);
   });
-
-  // var bgId = 'bedsqueak';
-  // createjs.Sound.on('fileload', function(event) {
-  //   var bg = createjs.Sound.play(event.id);
-  //   console.log(bg);
-  //   // bg.sourceNode.playbackRate.value = 2
-  //   bg.loop = -1;
-  // });
-
-  // createjs.Sound.registerSound('assets/bedsqueak2.mp3', bgId);
 });
