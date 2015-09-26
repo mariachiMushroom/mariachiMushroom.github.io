@@ -65,6 +65,6 @@ $(function() {
     var bg = createjs.Sound.play(BG_FILE[0]);
     bg.loop = -1;
 
-    setInterval(playRandomNoise, 5000);
+    setInterval(playRandomNoise, 4000);
   });
 });
